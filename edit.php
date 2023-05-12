@@ -2,20 +2,10 @@
 
   require "database.php";
 
-
-    if ($_SERVER["REQUEST_METHOD"]=="POST") {
-        $newContact = [
-            "name" => $_POST["name"],
-            "phone_number" => $_POST["phone_number"]
-        ];
-
-        $stmt = $conn->prepare("INSERT INTO contacts (name, phone_number) VALUES (:name, :phone_number)");
-        $stmt->bindParam(':name', $newContact["name"]);
-        $stmt->bindParam(':phone_number', $newContact["phone_number"]);
-        $stmt->execute();
-
-        header("Location: index.php");
-    }
+  $contact_id=$_GET["id"];
+  $stmt=$conn->query("SELECT * FROM contacts WHERE id=$contact_id");
+  $contact=$stmt->fetchAll(PDO::FETCH_ASSOC);
+  //var_dump($contact[0]["name"]);
 ?>
 
 <!DOCTYPE html>
@@ -87,12 +77,12 @@
                 <p class="text-danger">
 
                 </p>
-              <form method="POST" action="add.php">
+              <form method="" action="">
                 <div class="mb-3 row">
                   <label for="name" class="col-md-4 col-form-label text-md-end">Name</label>
     
                   <div class="col-md-6">
-                    <input id="name" type="text" class="form-control" name="name" autocomplete="name" autofocus>
+                    <input id="name" type="text" class="form-control" name="name" autocomplete="name" autofocus value="<?php echo $contact[0]["name"] ?>">
                   </div>
                 </div>
     
@@ -100,7 +90,7 @@
                   <label for="phone_number" class="col-md-4 col-form-label text-md-end">Phone Number</label>
     
                   <div class="col-md-6">
-                    <input id="phone_number" type="tel" class="form-control" name="phone_number" autocomplete="phone_number" autofocus>
+                    <input id="phone_number" type="tel" class="form-control" value="<?php echo $contact[0]["phone_number"] ?>" name="phone_number" autocomplete="phone_number" autofocus>
                   </div>
                 </div>
     

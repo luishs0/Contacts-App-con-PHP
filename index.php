@@ -7,6 +7,9 @@ if ($check=="true") {
 };
 
 
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -83,7 +86,7 @@ if ($check=="true") {
                                     echo "<a href='add.php'>Add One!</a>";
 
                                 } else {
-                                    echo "Could not connect to $database";
+                                    echo "Could not connect to database: $database";
                                 }
                             ?>
                         </div>
@@ -99,7 +102,7 @@ if ($check=="true") {
                             <div class="card-body">
                                 <h3 class="card-title text-capitalize"> <?php echo $contact["name"]; ?> </h3>
                                 <p class="m-2"> <?php echo $contact["phone_number"]; ?> </p>
-                                <a href="#" class="btn btn-secondary mb-2">Edit Contact</a>
+                                <a href="edit.php?id=<?php echo $contact["id"]; ?>" class="btn btn-secondary mb-2">Edit Contact</a>
                             </div>
                             </div>
                         </div>
