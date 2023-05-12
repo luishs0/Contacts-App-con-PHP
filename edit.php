@@ -30,9 +30,6 @@
     crossorigin="anonymous"
   ></script>
 
-  <!-- Static Content -->
-  <link rel="stylesheet" href="./static/css/index.css" />
-
   <title>Contacts App</title>
 </head>
 <body>
