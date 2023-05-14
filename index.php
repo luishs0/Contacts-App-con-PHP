@@ -1,15 +1,9 @@
 <?php
-
 require "database.php";
 
 if ($check=="true") {
     $contacts = $conn->query("SELECT * FROM contacts");
 };
-
-
-
-
-
 ?>
 
 <!DOCTYPE html>

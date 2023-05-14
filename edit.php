@@ -1,11 +1,25 @@
 <?php
-
   require "database.php";
 
   $contact_id=$_GET["id"];
   $stmt=$conn->query("SELECT * FROM contacts WHERE id=$contact_id");
-  $contact=$stmt->fetchAll(PDO::FETCH_ASSOC);
-  //var_dump($contact[0]["name"]);
+  $contactArray=$stmt->fetchAll(PDO::FETCH_ASSOC);
+  $contact=$contactArray[0];
+  var_dump($contact_id);
+
+
+  if (isset($_POST) && !empty($_POST)) {
+    $newName = $_POST["name"];
+    $newPhoneNumber = $_POST["phone_number"];
+
+    $stmt = $conn->prepare("UPDATE contacts SET name = :newName, phone_number = :newPhoneNumber WHERE id = :contact_id");
+    $stmt->bindParam(':newName', $newName);
+    $stmt->bindParam(':newPhoneNumber', $newPhoneNumber);
+    $stmt->bindParam(':contact_id', $contact_id);
+    $stmt->execute();
+
+    header("Location: index.php");
+  }
 ?>
 
 <!DOCTYPE html>
@@ -74,12 +88,12 @@
                 <p class="text-danger">
 
                 </p>
-              <form method="" action="">
+              <form method="POST" action="edit.php?id=<?php echo "$contact_id"; ?>">
                 <div class="mb-3 row">
                   <label for="name" class="col-md-4 col-form-label text-md-end">Name</label>
     
                   <div class="col-md-6">
-                    <input id="name" type="text" class="form-control" name="name" autocomplete="name" autofocus value="<?php echo $contact[0]["name"] ?>">
+                    <input id="name" type="text" class="form-control" name="name" autocomplete="name" autofocus value="<?php echo $contact["name"] ?>">
                   </div>
                 </div>
     
@@ -87,7 +101,7 @@
                   <label for="phone_number" class="col-md-4 col-form-label text-md-end">Phone Number</label>
     
                   <div class="col-md-6">
-                    <input id="phone_number" type="tel" class="form-control" value="<?php echo $contact[0]["phone_number"] ?>" name="phone_number" autocomplete="phone_number" autofocus>
+                    <input id="phone_number" type="tel" class="form-control" value="<?php echo $contact["phone_number"] ?>" name="phone_number" autocomplete="phone_number" autofocus>
                   </div>
                 </div>
     
