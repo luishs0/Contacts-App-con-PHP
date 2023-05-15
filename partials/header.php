@@ -26,7 +26,7 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand font-weight-bold" href="index.php">
+      <a class="navbar-brand font-weight-bold" href="home.php">
         <img class="mr-2" style="width: 2rem" src="https://lh3.googleusercontent.com/5xkPj76K_z91n78hmD1xf-U293ItzLnJsreSDUPvBsnh0UCMFRSiS7y4nP7IfENnePP1Lo2RUhlO1extIsv4pFMjOnp8x40wM3E9y1ocpj1GkAyGaJtVzlqHA9YgS3XveAwP1vlh=w1200-h630-p-k-no-nu" />
         ContactsApp
       </a>
@@ -46,7 +46,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="index.php">Home</a>
+            <a class="nav-link" href="home.php">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="add.php">Add Contact</a>

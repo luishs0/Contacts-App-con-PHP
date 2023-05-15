@@ -18,7 +18,7 @@
     $stmt->bindParam(':contact_id', $contact_id);
     $stmt->execute();
 
-    header("Location: index.php");
+    header("Location: home.php");
   }
 ?>
 

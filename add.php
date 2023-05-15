@@ -12,7 +12,7 @@
         $stmt->bindParam(':phone_number', $newContact["phone_number"]);
         $stmt->execute();
 
-        header("Location: index.php");
+        header("Location: home.php");
     }
 ?>
 
@@ -58,5 +58,5 @@
       </div>
     </div>
   </main>
-  
+
   <?php require "partials/footer.php" ?>

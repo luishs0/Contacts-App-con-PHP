@@ -7,5 +7,5 @@ $stmt = $conn->prepare("DELETE FROM contacts WHERE id= :idContact");
 $stmt->bindParam(':idContact', $_GET["id"]);
 $stmt->execute();
 
-header("Location: index.php");
+header("Location: home.php");
 ?>
