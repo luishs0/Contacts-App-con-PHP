@@ -13,6 +13,13 @@ $user_id = $_SESSION["user"]["id"];
 if ($check=="true") {
     $contacts = $conn->query("SELECT * FROM contacts WHERE user_id = $user_id");
 };
+
+$flash = "";
+if ($_SESSION["flash"] == "edit") {
+    $flash = "Contact updated &check;";
+} else if ($_SESSION["flash"] == "delete") {
+    $flash = "Contact deleted &check;";
+};
 ?>
 
   <?php require "partials/header.php" ?>
@@ -56,8 +63,9 @@ if ($check=="true") {
                     <?php } ?>
 
                 <?php } ?>
-
+                <p><?php echo $flash ?></p>
             </div>
         </div>
     </main>
+<?php $_SESSION["flash"] = ""; ?>
  <?php require "partials/footer.php" ?>

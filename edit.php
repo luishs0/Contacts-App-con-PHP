@@ -7,11 +7,18 @@
       return;
   };
 
-  if ($_SESSION["user"]["id"] != $_GET["id"]) {
+  $query = $conn->prepare("SELECT * FROM contacts WHERE id = :id LIMIT 1");
+  $query->bindParam(":id", $_GET["id"]);
+  $query->execute();
+
+  $contactCompare = $query->fetchAll(PDO::FETCH_ASSOC);
+
+
+  if ($_SESSION["user"]["id"] != $contactCompare[0]["user_id"]) {
     http_response_code(403);
     echo "http 403";
     return;
-}
+  }
 
   $contact_id=$_GET["id"];
   $stmt=$conn->query("SELECT * FROM contacts WHERE id=$contact_id");
@@ -29,6 +36,8 @@
     $stmt->bindParam(':newPhoneNumber', $newPhoneNumber);
     $stmt->bindParam(':contact_id', $contact_id);
     $stmt->execute();
+
+    $_SESSION["flash"] = "edit";
 
     header("Location: home.php");
   }
