@@ -8,8 +8,10 @@ if (empty($_SESSION["user"])) {
     return;
 };
 
+$user_id = $_SESSION["user"]["id"];
+
 if ($check=="true") {
-    $contacts = $conn->query("SELECT * FROM contacts");
+    $contacts = $conn->query("SELECT * FROM contacts WHERE user_id = $user_id");
 };
 ?>
 

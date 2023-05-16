@@ -38,6 +38,7 @@
                 $user = $statement->fetch(PDO::FETCH_ASSOC);
                 
                 session_start();
+                $_SESSION["user"] = $user;
 
                 header("Location: home.php");
             }   

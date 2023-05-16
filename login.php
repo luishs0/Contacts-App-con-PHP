@@ -13,7 +13,8 @@
         $loginUser = [
             "name" => $user[0]["name"],
             "email" => $_POST["email"],
-            "password" => $_POST["password"]
+            "password" => $_POST["password"],
+            "id" => $user[0]["id"]
         ];
 
 

@@ -1,5 +1,6 @@
 <?php
   require "database.php";
+  session_start();
 
     if (empty($_SESSION["user"])) {
         header("Location: index.php");
@@ -12,8 +13,11 @@
             "phone_number" => $_POST["phone_number"]
         ];
 
-        $stmt = $conn->prepare("INSERT INTO contacts (name, phone_number) VALUES (:name, :phone_number)");
+        $user_id = $_SESSION["user"]["id"];
+
+        $stmt = $conn->prepare("INSERT INTO contacts (name,user_id, phone_number) VALUES (:name, :user_id ,:phone_number)");
         $stmt->bindParam(':name', $newContact["name"]);
+        $stmt->bindParam(':user_id', $user_id);
         $stmt->bindParam(':phone_number', $newContact["phone_number"]);
         $stmt->execute();
 
