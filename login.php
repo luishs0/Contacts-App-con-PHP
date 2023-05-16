@@ -1,47 +1,37 @@
 <?php
-  require "database.php";
+    require "database.php";
 
-  $error = "";
+    $error = "";
     if ($_POST && !empty($_POST)) {
-    
-        $newUser = [
-            "name" => $_POST["name"],
+
+        $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email");
+        $stmt->bindParam(":email", $_POST["email"]);
+        $stmt->execute();
+
+        $user=$stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $loginUser = [
+            "name" => $user[0]["name"],
             "email" => $_POST["email"],
-            "password" => password_hash($_POST["password"], PASSWORD_BCRYPT)
+            "password" => $_POST["password"]
         ];
 
-        if (empty($newUser["name"]) || empty($newUser["email"]) || empty($_POST["password"]) ) {
+
+        if (empty($loginUser["email"]) || empty($_POST["password"]) ) {
             $error = "All fields must be completed";
-        } else if (strpos($newUser["email"], "@") == false) {
+        } else if (strpos($loginUser["email"], "@") == false) {
             $error = "The email format is not correct";
-        } else {
+        } else if (!password_verify($loginUser["password"], $user[0]["password"])) {
+            $error = "Invalid credentials";
+        } else  {
+            session_start();
 
-            $statement = $conn->prepare("SELECT * FROM users WHERE email = :email");
-            $statement->bindParam(":email", $newUser["email"]);
-            $statement->execute();
+            $_SESSION["user"] = $loginUser;
 
-            if ($statement->rowCount() > 0) {
-                $error = "This email is taken.";
-            } else {
-                $conn
-                ->prepare("INSERT INTO users (name, email, password) VALUES (:name, :email, :password)")
-                ->execute([
-                    ":name" => $newUser["name"],
-                    ":email" => $newUser["email"],
-                    ":password" => $newUser["password"],
-                ]);
+            header("Location: home.php");
 
-                $statement = $conn->prepare("SELECT * FROM users WHERE email = :email");
-                $statement->bindParam(":email", $newUser["email"]);
-                $statement->execute();
-
-                $user = $statement->fetch(PDO::FETCH_ASSOC);
-                
-                session_start();
-
-                header("Location: home.php");
-            }   
         }
+
     }
 ?>
 
@@ -76,20 +66,13 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Register</div>
+                <div class="card-header">Login</div>
                 <div class="card-body">
                 
                     <p class="text-danger">
 
                     </p>
-                <form method="POST" action="register.php">
-                    <div class="mb-3 row">
-                        <label for="name" class="col-md-4 col-form-label text-md-end">Name</label>
-            
-                        <div class="col-md-6">
-                            <input id="name" type="text" class="form-control" name="name" autocomplete="name" autofocus>
-                        </div>
-                    </div>
+                <form method="POST" action="login.php">
             
                     <div class="mb-3 row">
                         <label for="email" class="col-md-4 col-form-label text-md-end">Email</label>
@@ -122,7 +105,7 @@
                     </p>
 
                     <div class="mb-3 row text-end me-3">
-                        <a href="login.php">I have an account</a>
+                        <a href="register.php">I don't have an account</a>
                     </div>
                 </form>
                 </div>
@@ -132,4 +115,4 @@
         </div>
     </main>
 
-<?php require "partials/footer.php"; ?>
+<?php require "partials/footer.php" ?>

@@ -44,14 +44,25 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="home.php">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="add.php">Add Contact</a>
-          </li>
-        </ul>
+        <div class="d-flex justify-content-between w-100">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="home.php">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="add.php">Add Contact</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="logout.php">Logout</a>
+            </li>
+          </ul>
+          <?php if ($_SESSION["user"]) { ?>
+            <div class="email-user p-2">
+              <?php echo $_SESSION["user"]["email"] ?>
+            </div>
+          <?php } ?>
+        </div>
+        
       </div>
     </div>
   </nav>

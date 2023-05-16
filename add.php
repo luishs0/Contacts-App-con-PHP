@@ -1,6 +1,11 @@
 <?php
   require "database.php";
 
+    if (empty($_SESSION["user"])) {
+        header("Location: index.php");
+        return;
+    };
+
     if ($_SERVER["REQUEST_METHOD"]=="POST") {
         $newContact = [
             "name" => $_POST["name"],

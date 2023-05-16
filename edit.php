@@ -1,6 +1,11 @@
 <?php
   require "database.php";
 
+  if (empty($_SESSION["user"])) {
+      header("Location: index.php");
+      return;
+  };
+
   $contact_id=$_GET["id"];
   $stmt=$conn->query("SELECT * FROM contacts WHERE id=$contact_id");
   $contactArray=$stmt->fetchAll(PDO::FETCH_ASSOC);
