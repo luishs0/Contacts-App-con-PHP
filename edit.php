@@ -7,6 +7,12 @@
       return;
   };
 
+  if ($_SESSION["user"]["id"] != $_GET["id"]) {
+    http_response_code(403);
+    echo "http 403";
+    return;
+}
+
   $contact_id=$_GET["id"];
   $stmt=$conn->query("SELECT * FROM contacts WHERE id=$contact_id");
   $contactArray=$stmt->fetchAll(PDO::FETCH_ASSOC);
